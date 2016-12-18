@@ -22,6 +22,22 @@ func TestHTML(t *testing.T) {
   </body>
 </html>
 	`, `<!DOCTYPE html><html lang="ja"><title>testing...</title><h1>test  title</h1>`},
+		{`<pre><code class="language-css">:root {
+  font-size: 100%;
+}
+</code></pre>`, `<pre><code class="language-css">:root {
+  font-size: 100%;
+}
+</code></pre>`},
+		{`<pre>
+
+text
+
+ </pre>`, `<pre>
+
+text
+
+ </pre>`},
 	}
 	for _, test := range tests {
 		r := strings.NewReader(test.input)

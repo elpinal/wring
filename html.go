@@ -50,12 +50,27 @@ func render(w writer, n *html.Node) error {
 	return err
 }
 
+func hasAncestor(n *html.Node, s string) bool {
+	for c := n.Parent; c != nil; c = c.Parent {
+		if c.Type == html.ElementNode && c.Data == s {
+			return true
+		}
+	}
+	return false
+}
+
 func render1(w writer, n *html.Node) error {
 	switch n.Type {
 	case html.ErrorNode:
 		return errors.New("html: cannot render an ErrorNode node")
 	case html.TextNode:
-		_, err := w.WriteString(strings.TrimSpace(n.Data))
+		var data string
+		if hasAncestor(n, "pre") {
+			data = n.Data
+		} else {
+			data = strings.TrimSpace(n.Data)
+		}
+		_, err := w.WriteString(data)
 		return err
 	case html.DocumentNode:
 		for c := n.FirstChild; c != nil; c = c.NextSibling {
