@@ -84,7 +84,7 @@ func render1(w writer, n *html.Node) error {
 		_, err := w.Write([]byte("<!DOCTYPE html>"))
 		return err
 	default:
-		return fmt.Errorf("unknown type: %s", n.Type)
+		return fmt.Errorf("unknown type: %v", n.Type)
 	}
 
 	switch n.Data {
